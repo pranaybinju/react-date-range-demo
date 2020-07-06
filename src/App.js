@@ -109,6 +109,9 @@ function App() {
       },
     },
   ]);
+  const handleSelect = (date) => {
+    console.log(date); // native Date object
+  };
   return (
     <div style={{ display: "flex" }}>
       <DefinedRange
@@ -120,10 +123,19 @@ function App() {
       <DateRange
         onChange={(item) => setState([item.selection])}
         showSelectionPreview={true}
-        months={2}
+        months={1}
         ranges={state}
         direction="horizontal"
       />
+      <DateRange
+        onChange={(item) => setState([item.selection])}
+        showSelectionPreview={true}
+        months={1}
+        ranges={state}
+        direction="horizontal"
+      />
+      {/* <Calendar date={new Date()} ranges={state} onChange={handleSelect} />
+      <Calendar date={new Date()} ranges={state} onChange={handleSelect} /> */}
     </div>
   );
 }
