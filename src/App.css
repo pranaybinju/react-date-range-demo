@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+button.rdrStaticRange {
+  border: 1px solid !important;
+  color: lightblue !important;
+  width: 70%;
+  margin: 1em 0;
+  border-radius: 10px;
+}
+
+.rdrStaticRanges {
+  align-items: center;
+}
+
+.rdrStaticRangeLabel {
+  text-align: center !important;
+}
