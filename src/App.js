@@ -1,141 +1,91 @@
-import React, { useState } from "react";
-import { addDays } from "date-fns";
-import "./App.css";
-import "react-date-range/dist/styles.css"; // main css file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import React, { useState, useEffect } from "react";
 import {
-  createStaticRanges,
-  DateRange,
-  DefinedRange,
-  Calendar,
-} from "react-date-range";
+  addDays,
+  startOfMonth,
+  endOfMonth,
+  startOfYear,
+  endOfYear,
+} from "date-fns";
+import "./App.css";
 
-const renderStaticRangeLabel = () => <StaticRenderingLabel />;
-
-const StaticRenderingLabel = (props) => {
-  // const labels = [
-  //   "Today",
-  //   "This Month",
-  //   "Last Month",
-  //   "Till Today as of month",
-  //   "This Year",
-  //   "Last Year",
-  //   "All time",
-  //   "Custom Range",
-  // ].map((elem) => );
-
-  return <span>{"Holla"}</span>;
-};
+import { RangeSelector } from "./RangeSelector";
+import { DateRangePick } from "./DateRangePick";
 function App() {
-  const [state, setState] = useState([
+  const [currentRange, setRange] = useState("This Year");
+  const [datePickerState, setDatePickerState] = useState([
     {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      startDate: startOfYear(new Date()),
+      endDate: endOfYear(new Date()),
       key: "selection",
     },
   ]);
 
-  const predefinedRanges = createStaticRanges([
-    {
-      label: "Custom Range",
-      range: () => ({
-        startDate: new Date(),
-        endDate: new Date(),
-      }),
-      isSelected: () => {
-        console.log("selected");
-        return true;
-      },
+  const rangeToDate = {
+    Today: { startDate: new Date(), endDate: new Date() },
+    "This Month": {
+      startDate: startOfMonth(new Date()),
+      endDate: endOfMonth(new Date()),
     },
-    {
-      label: "Today",
-      range: () => ({
-        startDate: new Date(),
-        endDate: new Date(),
-      }),
-      isSelected() {
-        return true;
-      },
+    "Last Month": {
+      startDate: startOfMonth(new Date()),
+      endDate: endOfMonth(new Date()),
     },
-    {
-      label: "This Month",
-      range: () => ({
-        startDate: null,
-        endDate: null,
-      }),
-      isSelected() {
-        return true;
-      },
+    "This Year": {
+      startDate: startOfYear(new Date()),
+      endDate: endOfYear(new Date()),
     },
-    {
-      label: "Last Month",
-      range: () => ({
-        startDate: null,
-        endDate: null,
-      }),
-      isSelected() {
-        return true;
-      },
+    "Last Year": {
+      startDate: startOfYear(new Date()),
+      endDate: endOfYear(new Date()),
     },
-
-    {
-      label: "This Year",
-      range: () => ({
-        startDate: null,
-        endDate: null,
-      }),
-      isSelected() {
-        return true;
-      },
+    "All Time": {
+      startDate: new Date(2018, 1, 1),
+      endDate: new Date(),
     },
-    {
-      label: "Last Year",
-      range: () => ({
-        startDate: null,
-        endDate: null,
-      }),
-      isSelected() {
-        return true;
-      },
-    },
-    {
-      label: "All time",
-      range: () => ({
-        startDate: null,
-        endDate: null,
-      }),
-      isSelected() {
-        return true;
-      },
-    },
-  ]);
-  const handleSelect = (date) => {
-    console.log(date); // native Date object
   };
+
+  const updateRange = (range) => {
+    setRange(range);
+    setDatePickerState([
+      {
+        startDate: rangeToDate[range].startDate,
+        endDate: rangeToDate[range].endDate,
+        key: "selection",
+      },
+    ]);
+  };
+
+  const updateDatePickerState = (item) => {
+    setDatePickerState([item.selection]);
+  };
+
   return (
-    <div style={{ display: "flex" }}>
-      <DefinedRange
-        renderStaticRangeLabel={renderStaticRangeLabel}
-        staticRanges={predefinedRanges}
-        inputRanges={[]}
-        onChange={(item) => setState([item.selection])}
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <RangeSelector
+        updateRange={updateRange}
+        currentRange={currentRange}
+        ranges={[
+          "Today",
+          "This Month",
+          "Last Month",
+          "This Year",
+          "Last Year",
+          "All Time",
+        ]}
       />
-      <DateRange
-        onChange={(item) => setState([item.selection])}
-        showSelectionPreview={true}
-        months={1}
-        ranges={state}
-        direction="horizontal"
+
+      <DateRangePick
+        shownStartDate={rangeToDate[currentRange].startDate}
+        shownEndDate={rangeToDate[currentRange].endDate}
+        datePickerState={datePickerState}
+        updateDatePickerState={updateDatePickerState}
       />
-      <DateRange
-        onChange={(item) => setState([item.selection])}
-        showSelectionPreview={true}
-        months={1}
-        ranges={state}
-        direction="horizontal"
-      />
-      {/* <Calendar date={new Date()} ranges={state} onChange={handleSelect} />
-      <Calendar date={new Date()} ranges={state} onChange={handleSelect} /> */}
     </div>
   );
 }

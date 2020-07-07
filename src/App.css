@@ -39,10 +39,6 @@
 
 button.rdrStaticRange {
   border: 1px solid !important;
-  color: lightblue !important;
-  width: 70%;
-  margin: 1em 0;
-  border-radius: 10px;
 }
 
 .rdrStaticRanges {
@@ -51,4 +47,17 @@ button.rdrStaticRange {
 
 .rdrStaticRangeLabel {
   text-align: center !important;
+}
+
+.rdrDateDisplayWrapper {
+  display: none;
+}
+
+.selected-range {
+  border: 1px solid !important;
+  color: white !important;
+  background-color: lightblue !important;
+
+  margin: 1em 0;
+  border-radius: 10px;
 }
