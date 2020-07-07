@@ -1,5 +1,4 @@
 import React from "react";
-import { DateRange } from "react-date-range";
 import {
   addDays,
   startOfMonth,
@@ -7,36 +6,35 @@ import {
   startOfYear,
   endOfYear,
 } from "date-fns";
-import "react-date-range/dist/styles.css"; // main css file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import "rsuite/dist/styles/rsuite-default.css";
+
+import { DateRangePicker } from "rsuite";
 
 export const DateRangePick = ({
-  shownStartDate,
-  shownEndDate,
   datePickerState,
+  setShowRange,
+  ranges,
   updateDatePickerState,
 }) => {
-  console.log(shownStartDate);
-  console.log(shownEndDate);
+  console.log(datePickerState);
+
   return (
-    <>
-      <DateRange
-        shownDate={shownStartDate}
-        showMonthAndYearPickers={false}
-        onChange={(item) => updateDatePickerState(item)}
-        showSelectionPreview={true}
-        months={2}
-        ranges={datePickerState}
-        direction="horizontal"
+    <div>
+      <DateRangePicker
+        cleanable={false}
+        onOpen={() => {
+          setShowRange(true);
+        }}
+        onClose={() => {
+          setShowRange(false);
+        }}
+        ranges={ranges}
+        onChange={(value) => {
+          updateDatePickerState(value);
+        }}
+        value={datePickerState}
+        placeholder="Select Date Range"
       />
-      {/* <DateRange
-        shownEndDate={shownEndDate}
-        onChange={(item) => updateDatePickerState(item)}
-        showSelectionPreview={true}
-        months={1}
-        ranges={datePickerState}
-        direction="horizontal"
-      /> */}
-    </>
+    </div>
   );
 };

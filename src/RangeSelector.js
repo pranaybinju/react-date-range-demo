@@ -4,7 +4,9 @@ import "./App.css";
 
 export const RangeSelector = ({ ranges, currentRange, updateRange }) => {
   return (
-    <div style={{ display: "flex" }}>
+    <div
+      style={{ position: "absolute", top: "10%", left: "20%", display: "flex" }}
+    >
       <div
         style={{
           display: "flex",

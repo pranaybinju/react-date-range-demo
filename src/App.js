@@ -12,12 +12,10 @@ import { RangeSelector } from "./RangeSelector";
 import { DateRangePick } from "./DateRangePick";
 function App() {
   const [currentRange, setRange] = useState("This Year");
+  const [showRange, setShowRange] = useState(false);
   const [datePickerState, setDatePickerState] = useState([
-    {
-      startDate: startOfYear(new Date()),
-      endDate: endOfYear(new Date()),
-      key: "selection",
-    },
+    startOfYear(new Date()),
+    endOfYear(new Date()),
   ]);
 
   const rangeToDate = {
@@ -47,16 +45,13 @@ function App() {
   const updateRange = (range) => {
     setRange(range);
     setDatePickerState([
-      {
-        startDate: rangeToDate[range].startDate,
-        endDate: rangeToDate[range].endDate,
-        key: "selection",
-      },
+      rangeToDate[range].startDate,
+      rangeToDate[range].endDate,
     ]);
   };
 
   const updateDatePickerState = (item) => {
-    setDatePickerState([item.selection]);
+    setDatePickerState(item);
   };
 
   return (
@@ -67,20 +62,25 @@ function App() {
         alignItems: "center",
       }}
     >
-      <RangeSelector
-        updateRange={updateRange}
-        currentRange={currentRange}
-        ranges={[
-          "Today",
-          "This Month",
-          "Last Month",
-          "This Year",
-          "Last Year",
-          "All Time",
-        ]}
-      />
-
       <DateRangePick
+        ranges={[
+          { label: "Today", value: [new Date(), new Date()] },
+          {
+            label: "This Month",
+            value: [startOfMonth(new Date()), endOfMonth(new Date())],
+          },
+
+          {
+            label: "This Year",
+            value: [startOfYear(new Date()), endOfYear(new Date())],
+          },
+          {
+            label: "Last Year",
+            value: [startOfYear(new Date()), endOfYear(new Date())],
+          },
+          { label: "All Time", value: [new Date(2018, 1, 1), new Date()] },
+        ]}
+        setShowRange={setShowRange}
         shownStartDate={rangeToDate[currentRange].startDate}
         shownEndDate={rangeToDate[currentRange].endDate}
         datePickerState={datePickerState}

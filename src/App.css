@@ -61,3 +61,32 @@ button.rdrStaticRange {
   margin: 1em 0;
   border-radius: 10px;
 }
+
+.rs-picker-daterange-panel {
+  display: flex;
+  flex-direction: row;
+}
+.rs-picker-daterange-content {
+  order: 2;
+}
+.rs-picker-toolbar {
+  order: 1;
+}
+.rs-picker-toolbar-ranges {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-around !important;
+  height: auto !important;
+}
+.rs-picker-toolbar-option {
+  margin: 1em !important;
+  color: lightblue !important;
+  background-color: transparent !important;
+  border: 1px solid lightblue !important;
+  padding: 1em !important;
+  border-radius: 10px !important;
+  outline: none !important;
+}
+.rs-picker-toolbar-right {
+  display: none;
+}
